@@ -3,9 +3,10 @@ from sqlalchemy.orm import Session
 from database import engine, get_db
 from models import Task as TaskModel
 from schemas import Task, TaskCreate, TaskUpdate
+from database import Base, engine
 
 app = FastAPI()
-engine.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 @app.post("/tasks/", response_model=Task)
 def create_task(task: TaskCreate, db: Session = Depends(get_db)):
